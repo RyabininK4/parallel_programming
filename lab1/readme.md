@@ -4,6 +4,6 @@
 
 Скрины работающей программы:
 * Запуск №1
-![сonsole](Запуск 1.jpg "result")
+![сonsole](Запуск 1.JPG "result")
 * Запуск №2
-![сonsole](Запуск 2.jpg "result")
+![сonsole](Запуск 2.JPG "result")
