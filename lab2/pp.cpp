@@ -22,7 +22,6 @@ int main(int argc, char** argv)
     int* bufInt = new int[5];
     float* bufFloat = new float[5];
     double* bufDou = new double[5];
-    double time;
     for (int i = 0; i < 5; i++) {
         bufInt[i] = i;
         bufFloat[i] = double(i) / 10;
@@ -32,7 +31,60 @@ int main(int argc, char** argv)
     MPI_Bcast_Tree(&bufInt, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufFloat, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufDou, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Barrier(MPI_COMM_WORLD);
+    //вывод из 1 процесса
     if (rank == 0) {
+        cout << "int : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufInt[i] << " ";
+        }
+        cout << endl << "float : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufFloat[i] << " ";
+        }
+        cout << endl << "double : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufDou[i] << " ";
+        }
+        cout << endl;
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    //вывод из 2 процесса
+    if (rank == 1) {
+        cout << "int : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufInt[i] << " ";
+        }
+        cout << endl << "float : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufFloat[i] << " ";
+        }
+        cout << endl << "double : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufDou[i] << " ";
+        }
+        cout << endl;
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    //вывод из 3 процесса
+    if (rank == 2) {
+        cout << "int : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufInt[i] << " ";
+        }
+        cout << endl << "float : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufFloat[i] << " ";
+        }
+        cout << endl << "double : ";
+        for (int i = 0; i < 5; i++) {
+            cout << bufDou[i] << " ";
+        }
+        cout << endl;
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    //вывод из 4 процесса
+    if (rank == 3) {
         cout << "int : ";
         for (int i = 0; i < 5; i++) {
             cout << bufInt[i] << " ";
@@ -73,6 +125,7 @@ int MPI_Bcast_Tree(void *buffer, int count, MPI_Datatype datatype, int root, MPI
     MPI_Status status;
 
     if (rank == root) {
+        cout << "my rank : " << rank << endl;
         for (i = 1; ((i <= child) && (i < size)); i++) {
             if (i != root)
                 MPI_Send(buffer, count, datatype, i, 0, comm);
@@ -114,7 +167,7 @@ int MPI_Bcast_Tree(void *buffer, int count, MPI_Datatype datatype, int root, MPI
                 MPI_Send(receiver, count, datatype, dest, 0, comm);
                 dest += 1;
             }
-        }  
+        }    
         cout << "my rank : " << rank << endl;
     }
     return 0;
