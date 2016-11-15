@@ -1,5 +1,4 @@
 #include "mpi.h"
-#include <time.h>
 #include <stdlib.h> 
 #include <stack>
 #include <iostream>
@@ -29,14 +28,11 @@ int main(int argc, char** argv)
         bufFloat[i] = double(i) / 10;
         bufDou[i] = float(i) / 7;
     }
-    if (rank == 0) {
-        time = MPI_Wtime();
-    }
+    
     MPI_Bcast_Tree(&bufInt, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufFloat, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufDou, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     if (rank == 0) {
-        time -= MPI_Wtime();
         cout << "int : ";
         for (int i = 0; i < 5; i++) {
             cout << bufInt[i] << " ";
@@ -49,19 +45,7 @@ int main(int argc, char** argv)
         for (int i = 0; i < 5; i++) {
             cout << bufDou[i] << " ";
         }
-        //printf("\n");
-       // printf("%lf15", time*(-1));
-       // printf("\n");
-        time = MPI_Wtime();
-    }
-    MPI_Bcast(&bufInt, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&bufFloat, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&bufDou, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    if (rank == 0) {
-        time -= MPI_Wtime();
-        //printf("%lf15", time*(-1));
-        //printf("\n");
-        time = MPI_Wtime();
+        cout << endl;
     }
     MPI_Finalize();
     return 0;
@@ -93,18 +77,19 @@ int MPI_Bcast_Tree(void *buffer, int count, MPI_Datatype datatype, int root, MPI
             if (i != root)
                 MPI_Send(buffer, count, datatype, i, 0, comm);
             else
-                MPI_Send(buffer, count, datatype, 0, 0, comm);
+                MPI_Send(buffer, count, datatype, 0, 0, comm); 
         }
-    }
+    } 
     else {
         if (rank != 0) {
-            if (level(rank, child) == 2)
+            if (level(rank, child) == 2) {
                 MPI_Recv(receiver, count, datatype, root, 0, comm, &status);
+            }
             else {
-                if (parent(rank, child) == root)
+                if (parent(rank, child) == root) 
                     MPI_Recv(receiver, count, datatype, 0, 0, comm, &status);
                 else
-                    MPI_Recv(receiver, count, datatype, parent(rank, child), 0, comm, &status);
+                    MPI_Recv(receiver, count, datatype, parent(rank, child), 0, comm, &status); 
             }
 
             int dest = rank*child + 1;
@@ -129,8 +114,8 @@ int MPI_Bcast_Tree(void *buffer, int count, MPI_Datatype datatype, int root, MPI
                 MPI_Send(receiver, count, datatype, dest, 0, comm);
                 dest += 1;
             }
-        }
-       // cout << "my rank " << rank << " : " << ((int*)receiver)[0] << std::endl;
+        }  
+        cout << "my rank : " << rank << endl;
     }
     return 0;
-}
+} 
