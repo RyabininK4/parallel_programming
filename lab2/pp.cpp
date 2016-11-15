@@ -27,13 +27,14 @@ int main(int argc, char** argv)
         bufFloat[i] = double(i) / 10;
         bufDou[i] = float(i) / 7;
     }
-    cout << "my rank : " << rank << endl;
+    
     MPI_Bcast_Tree(&bufInt, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufFloat, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufDou, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
     //вывод из 1 процесса
     if (rank == 0) {
+        cout << "my rank : " << rank << endl;
         cout << "int : ";
         for (int i = 0; i < 5; i++) {
             cout << bufInt[i] << " ";
@@ -51,6 +52,7 @@ int main(int argc, char** argv)
     MPI_Barrier(MPI_COMM_WORLD);
     //вывод из 2 процесса
     if (rank == 1) {
+        cout << "my rank : " << rank << endl;
         cout << "int : ";
         for (int i = 0; i < 5; i++) {
             cout << bufInt[i] << " ";
@@ -68,6 +70,7 @@ int main(int argc, char** argv)
     MPI_Barrier(MPI_COMM_WORLD);
     //вывод из 3 процесса
     if (rank == 2) {
+        cout << "my rank : " << rank << endl;
         cout << "int : ";
         for (int i = 0; i < 5; i++) {
             cout << bufInt[i] << " ";
@@ -85,6 +88,7 @@ int main(int argc, char** argv)
     MPI_Barrier(MPI_COMM_WORLD);
     //вывод из 4 процесса
     if (rank == 3) {
+        cout << "my rank : " << rank << endl;
         cout << "int : ";
         for (int i = 0; i < 5; i++) {
             cout << bufInt[i] << " ";
