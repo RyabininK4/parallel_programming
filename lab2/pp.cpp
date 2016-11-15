@@ -27,7 +27,7 @@ int main(int argc, char** argv)
         bufFloat[i] = double(i) / 10;
         bufDou[i] = float(i) / 7;
     }
-    
+    cout << "my rank : " << rank << endl;
     MPI_Bcast_Tree(&bufInt, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufFloat, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufDou, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -125,7 +125,6 @@ int MPI_Bcast_Tree(void *buffer, int count, MPI_Datatype datatype, int root, MPI
     MPI_Status status;
 
     if (rank == root) {
-        cout << "my rank : " << rank << endl;
         for (i = 1; ((i <= child) && (i < size)); i++) {
             if (i != root)
                 MPI_Send(buffer, count, datatype, i, 0, comm);
@@ -168,7 +167,7 @@ int MPI_Bcast_Tree(void *buffer, int count, MPI_Datatype datatype, int root, MPI
                 dest += 1;
             }
         }    
-        cout << "my rank : " << rank << endl;
+        //cout << "my rank : " << rank << endl;
     }
     return 0;
 } 
