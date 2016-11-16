@@ -3,6 +3,7 @@
 #include <stack>
 #include <iostream>
 #include <stdio.h>
+#include <time.h>
 
 using std::cout;
 using std::endl;
@@ -19,90 +20,57 @@ int main(int argc, char** argv)
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    int* bufInt = new int[5];
-    float* bufFloat = new float[5];
-    double* bufDou = new double[5];
-    for (int i = 0; i < 5; i++) {
-        bufInt[i] = i;
-        bufFloat[i] = double(i) / 10;
-        bufDou[i] = float(i) / 7;
+    int const n = 30000000;
+    int*  bufInt = new int[n];
+    float* bufFloat = new float[n];
+    double* bufDou = new double[n];
+    for (int i = 0; i < n; i++) {
+        bufInt[n] = rand() % 10;
+        bufFloat[n] = ((float)rand() / RAND_MAX * (20 - 10) + -10);
+        bufDou[n] = ((double)rand() / RAND_MAX * 10);
     }
-    
+    double time;
+    if (rank == 0) {
+        time = MPI_Wtime();
+
+    }
+
     MPI_Bcast_Tree(&bufInt, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufFloat, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Bcast_Tree(&bufDou, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Barrier(MPI_COMM_WORLD);
-    //вывод из 1 процесса
     if (rank == 0) {
-        cout << "my rank : " << rank << endl;
-        cout << "int : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufInt[i] << " ";
-        }
-        cout << endl << "float : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufFloat[i] << " ";
-        }
-        cout << endl << "double : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufDou[i] << " ";
-        }
-        cout << endl;
+    time -= MPI_Wtime();
+    printf("%lf15", time*(-1));
+    cout << endl;
+    time = MPI_Wtime();
     }
     MPI_Barrier(MPI_COMM_WORLD);
-    //вывод из 2 процесса
-    if (rank == 1) {
+
+    MPI_Bcast(&bufInt, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&bufFloat, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&bufDou, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    if (rank == 0) {
+        time -= MPI_Wtime();
+        printf("%lf15", time*(-1));
+        cout << endl;
+    }
+    /* 
+     if (rank == 0) {
         cout << "my rank : " << rank << endl;
         cout << "int : ";
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             cout << bufInt[i] << " ";
         }
         cout << endl << "float : ";
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             cout << bufFloat[i] << " ";
         }
         cout << endl << "double : ";
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             cout << bufDou[i] << " ";
         }
         cout << endl;
-    }
-    MPI_Barrier(MPI_COMM_WORLD);
-    //вывод из 3 процесса
-    if (rank == 2) {
-        cout << "my rank : " << rank << endl;
-        cout << "int : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufInt[i] << " ";
-        }
-        cout << endl << "float : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufFloat[i] << " ";
-        }
-        cout << endl << "double : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufDou[i] << " ";
-        }
-        cout << endl;
-    }
-    MPI_Barrier(MPI_COMM_WORLD);
-    //вывод из 4 процесса
-    if (rank == 3) {
-        cout << "my rank : " << rank << endl;
-        cout << "int : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufInt[i] << " ";
-        }
-        cout << endl << "float : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufFloat[i] << " ";
-        }
-        cout << endl << "double : ";
-        for (int i = 0; i < 5; i++) {
-            cout << bufDou[i] << " ";
-        }
-        cout << endl;
-    }
+    }*/
     MPI_Finalize();
     return 0;
 }
@@ -170,8 +138,9 @@ int MPI_Bcast_Tree(void *buffer, int count, MPI_Datatype datatype, int root, MPI
                 MPI_Send(receiver, count, datatype, dest, 0, comm);
                 dest += 1;
             }
-        }    
-        //cout << "my rank : " << rank << endl;
+        }
+        
+       // cout << "my rank : " << rank << endl; 
     }
     return 0;
 } 
