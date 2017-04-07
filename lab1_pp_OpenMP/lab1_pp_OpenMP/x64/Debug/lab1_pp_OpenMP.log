@@ -1,0 +1,7 @@
+﻿  Source.cpp
+c:\users\kirill ryabinin\desktop\learning\3 course\параллельное программирование\parallel_programming\lab1_pp_openmp\lab1_pp_openmp\source.cpp(22): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\kirill ryabinin\desktop\learning\3 course\параллельное программирование\parallel_programming\lab1_pp_openmp\lab1_pp_openmp\source.cpp(23): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\kirill ryabinin\desktop\learning\3 course\параллельное программирование\parallel_programming\lab1_pp_openmp\lab1_pp_openmp\source.cpp(64): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\kirill ryabinin\desktop\learning\3 course\параллельное программирование\parallel_programming\lab1_pp_openmp\lab1_pp_openmp\source.cpp(132): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\kirill ryabinin\desktop\learning\3 course\параллельное программирование\parallel_programming\lab1_pp_openmp\lab1_pp_openmp\source.cpp(139): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  lab1_pp_OpenMP.vcxproj -> C:\Users\Kirill Ryabinin\Desktop\Learning\3 course\Параллельное программирование\parallel_programming\lab1_pp_OpenMP\x64\Debug\lab1_pp_OpenMP.exe

@@ -58,16 +58,10 @@ int findOverlappingPair(string str1, string str2, string& str)
 
 // Function to calculate smallest string that contains
 // each string in the given set as substring.
-void findShortestSuperstring(int thread_num, vector<string> arr, int a)
+void findShortestSuperstring(vector<string> arr)
 {
+    omp_get_thread_num();
     int len = arr.size();
-    int start;
-    if (len != a) {
-        start = len/2;
-    }
-    else {
-        start = len;
-    }
 
     // run len-1 times to consider every pair
     while (len != 1)
@@ -81,8 +75,8 @@ void findShortestSuperstring(int thread_num, vector<string> arr, int a)
 
         // to store resultant string after maximum overlap
         string resStr;
-
-        for (int i = 0; i < start; i++)
+#pragma omp parallel for
+        for (int i = 0; i < len; i++)
         {
             for (int j = i + 1; j < len; j++)
             {
@@ -127,21 +121,20 @@ int main()
     int thread_num = 2;
     omp_set_num_threads(thread_num);
     clock_t stop_time;
-    vector<string> arr = { "abc", "cde", "dew" };
-    for (int i = 0; i < 100; i++) {
+    vector<string> arr = { "abc", "cde" };
+    for (int i = 0; i < 500; i++) {
         arr.push_back("er");
     }
     clock_t begin_time = clock();
-    int pos = 0, length = 0;
 #pragma omp parallel
-    findShortestSuperstring(thread_num, arr, arr.size() / thread_num);
+    findShortestSuperstring(arr);
     stop_time = clock();
     cout << "Parallel time on " << thread_num << " threads: " << double(stop_time - begin_time) / CLOCKS_PER_SEC << endl;
 
     thread_num = 1;
     begin_time = clock();
-    pos = 0; length = 0;
-    findShortestSuperstring(thread_num, arr, arr.size()/thread_num);
+    omp_set_num_threads(thread_num);
+    findShortestSuperstring(arr);
     stop_time = clock();
 
     cout << "Single time: " << double(stop_time - begin_time) / CLOCKS_PER_SEC <<  endl;
