@@ -1,0 +1,60 @@
+1-поток 1-проц
+Result = abcder
+Time =  23.3256 sec
+
+1-поток 2-проц
+Result = abcder
+Time =  19.2462 sec
+
+1-поток 4-проц
+Result = abcder
+Time =  12.8299 sec
+
+1-поток 8-проц
+Result = abcder
+Time =  7.51803 sec
+
+1-поток 16-проц
+Result = abcder
+Time =  4.02121 sec
+________________________________________
+2-потока 1-проц
+Result = abcder
+Time =  21.5964 sec
+
+2-потока 2-проц
+Result = abcder
+Time =  14.0192 sec
+
+2-потока 4-проц
+Result = abcder
+Time =  8.74029 sec
+
+2-потока 8-проц
+Result = abcder
+Time =  5.41254 sec
+
+2-потока 16-проц
+Result = abcder
+Time =  3.52194 sec
+_________________________________________
+4-потока 1-проц
+Result = abcder
+Time =  21.4874 sec
+
+4-потока 2-проц
+Result = abcder
+Time =  11.866 sec
+
+4-потока 4-проц
+Result = abcder
+Time =  6.66573 sec
+
+4-потока 8-проц
+Result = abcder
+Time =  4.82237 sec
+
+4-потока 16-проц
+Result = abcder
+Time =  3.21679 sec
+

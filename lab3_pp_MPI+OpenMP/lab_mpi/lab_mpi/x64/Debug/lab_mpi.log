@@ -1,0 +1,6 @@
+﻿  mpi.cpp
+c:\users\kirill ryabinin\desktop\learning\lab_mpi\lab_mpi\mpi.cpp(17): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\kirill ryabinin\desktop\learning\lab_mpi\lab_mpi\mpi.cpp(18): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\kirill ryabinin\desktop\learning\lab_mpi\lab_mpi\mpi.cpp(49): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\kirill ryabinin\desktop\learning\lab_mpi\lab_mpi\mpi.cpp(62): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  lab_mpi.vcxproj -> C:\Users\Kirill Ryabinin\Desktop\Learning\lab_mpi\x64\Debug\lab_mpi.exe
